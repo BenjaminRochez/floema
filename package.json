@@ -2,9 +2,11 @@
   "name": "floema",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.build.js",
-    "development": "webpack serve ./webpack.config.development.js",
-    "start": "npm run development"
+    "backend:build": "node app.js",
+    "backend:dev": "nodemon app.js",
+    "frontend:build": "webpack --progress --config webpack.config.build.js",
+    "frontend:dev": "webpack serve ./webpack.config.development.js",
+    "start": "concurrently --kill-others \"yarn backend:dev\" \"yarn frontend:dev\""
   },
   "main": "index.js",
   "repository": "https://github.com/BenjaminRochez/floema.git",
@@ -14,6 +16,7 @@
     "@babel/core": "^7.14.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "concurrently": "^6.1.0",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
     "eslint": "^7.26.0",
@@ -31,6 +34,7 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^9.0.0",
     "mini-css-extract-plugin": "^1.6.0",
+    "nodemon": "^2.0.7",
     "postcss-loader": "^5.2.0",
     "sass": "^1.32.12",
     "sass-loader": "^11.1.0",
@@ -40,5 +44,8 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
+  }
 }
