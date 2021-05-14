@@ -48,7 +48,7 @@ app.get('/about', async (req, res) => {
     ]).then(response => {
       const { results } = response
       const [meta, about] = results
-      console.log(about, meta)
+      console.log(about.data.body)
       res.render('pages/about', {
         meta,
         about
