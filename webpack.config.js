@@ -14,50 +14,33 @@ const dirShared = path.join(__dirname, 'shared')
 const dirStyles = path.join(__dirname, 'styles')
 const dirNode = 'node_modules'
 
-console.log(dirApp, dirShared, dirStyles)
-
 module.exports = {
-  entry: [
-    path.join(dirApp, 'index.js'),
-    path.join(dirStyles, 'index.scss')
+  entry: [path.join(dirApp, 'index.js'), path.join(dirStyles, 'index.scss')],
 
-  ],
   resolve: {
-    modules: [
-      dirApp,
-      dirShared,
-      dirStyles,
-      dirNode
-    ]
+    modules: [dirApp, dirShared, dirStyles, dirNode]
   },
+
   plugins: [
     new webpack.DefinePlugin({
       IS_DEVELOPMENT
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: './shared',
-          to: ''
-        }
-      ]
+      patterns: [{ from: './shared', to: '' }]
     }),
-
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-
     new ImageMinimizerPlugin({
       minimizerOptions: {
         plugins: [
           ['gifsicle', { interlaced: true }],
           ['jpegtran', { progressive: true }],
-          ['optipng', { optimizationLevel: 5 }]
+          ['optipng', { optimizationLevel: 8 }]
         ]
       }
     }),
-
     new CleanWebpackPlugin()
   ],
 
@@ -69,9 +52,8 @@ module.exports = {
           loader: 'babel-loader'
         }
       },
-
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.scss$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -94,23 +76,16 @@ module.exports = {
         test: /\.(jpe?g|png|gif|svg|woff2?|fnt|webp)$/,
         loader: 'file-loader',
         options: {
-          // outputPath: 'images',
           name (file) {
             return '[hash].[ext]'
           }
         }
       },
       {
-        test: /\.(jpe?g|png|gif|svg|webp)$/i,
+        test: /\.(jpe?g|png|gif|svg|webp)$/,
         use: [
           {
-            loader: ImageMinimizerPlugin.loader,
-            options: {
-              severityError: 'warning', // Ignore errors on corrupted images
-              minimizerOptions: {
-                plugins: ['gifsicle']
-              }
-            }
+            loader: ImageMinimizerPlugin.loader
           }
         ]
       },
