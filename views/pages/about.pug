@@ -24,12 +24,12 @@ block content
               figure.about__content__media
                 img.about__content__media__image(alt=section.primary.image.alt, src=section.primary.image.url)
 
-        if section.slice_type='highlight'
+        if section.slice_type == 'highlight'
           section.about__highlight
             .about__highlight__wrapper
               if section.primary.label
                 p.about__highlight__label=section.primary.label
-              h3.about__highlight__title=section.primary.title
+              h3.about__highlight__title=section.primary.highlight_title
 
               each media in section.items
                 figure.about__highlight__media
