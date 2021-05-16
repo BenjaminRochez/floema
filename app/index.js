@@ -3,12 +3,23 @@ import About from 'pages/about'
 import Collections from 'pages/collections'
 import Detail from 'pages/detail'
 import Home from 'pages/home'
+import Preloader from './components/Preloader'
 
 class App {
   constructor () {
+    this.createPreloader()
     this.createContent()
     this.createPages()
     this.addLinkListerners()
+  }
+
+  createPreloader () {
+    this.preloader = new Preloader()
+    this.preloader.once('completed', this.onPreloaded)
+  }
+
+  onPreloaded () {
+    console.log('preloaded')
   }
 
   createContent () {
@@ -47,6 +58,8 @@ class App {
       this.page = this.pages[this.template]
       this.page.create()
       this.page.show()
+
+      this.addLinkListerners()
     } else {
       console.log('Error')
     }

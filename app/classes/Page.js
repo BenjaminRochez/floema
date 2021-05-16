@@ -15,7 +15,11 @@ export default class Page {
   }
 
   create () {
-    this.element = document.querySelector(this.selector)
+    if (this.selector instanceof window.HTMLElement) {
+      this.element = this.selector;
+    } else {
+      this.element = document.querySelector(this.selector);
+    }
     this.elements = {}
 
     each(this.selectorChildren, (entry, key) => {
@@ -31,6 +35,8 @@ export default class Page {
         }
       }
     })
+
+    console.log(this.element, this.elements)
   }
 
   show () {
