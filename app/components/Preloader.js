@@ -62,7 +62,7 @@ export default class Preloader extends Component {
         duration: 1.5,
         ease: 'expo.out',
         stagger: 0.1,
-        y: '100%'
+        y: '130%'
       });
 
       this.animateOut.to(
@@ -71,7 +71,7 @@ export default class Preloader extends Component {
           duration: 1.5,
           ease: 'expo.out',
           stagger: 0.1,
-          y: '100%'
+          y: '130%'
         },
         '-=1.4'
       );
@@ -88,7 +88,7 @@ export default class Preloader extends Component {
       );
 
       this.animateOut.call((_) => {
-        this.emit('complited');
+        this.emit('completed');
       });
     });
   }

@@ -15,11 +15,12 @@ class App {
 
   createPreloader () {
     this.preloader = new Preloader()
-    this.preloader.once('completed', this.onPreloaded)
+    this.preloader.once('completed', this.onPreloaded.bind(this))
   }
 
   onPreloaded () {
-    console.log('preloaded')
+    this.preloader.destroy()
+    this.page.show()
   }
 
   createContent () {
@@ -36,7 +37,7 @@ class App {
     }
     this.page = this.pages[this.template]
     this.page.create()
-    this.page.show()
+
   }
 
   async onChange (url) {
