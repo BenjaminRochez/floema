@@ -89,13 +89,16 @@ export default class Page {
   }
 
   onResize() {
-    this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight;
+    if(this.elements.wrapper){
+      this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight;
+    }
+
     //each(this.animations, (animation) => animation.onResize());
   }
 
   onMouseWheel (event) {
-    const { deltaY } = event
-    this.scroll.target += deltaY
+    const { pixelY } = NormalizeWheel(event)
+    this.scroll.target += pixelY
   }
 
   addEventListeners () {
