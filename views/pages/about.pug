@@ -4,7 +4,7 @@ block variables
   - var template = "about"
 
 block content
-  .about
+  .about(data-background="#9dad7f" data-color="#F9F1E7")
     .about__wrapper
       section.about__gallery
         .about__gallery
@@ -14,13 +14,13 @@ block content
 
       each section in about.data.body
         if section.slice_type == 'title'
-          h2.about__title=section.primary.text
+          h2.about__title(data-animation="title")=section.primary.text
 
         if section.slice_type == 'content'
           section.about__content
             .about__content__wrapper
-              p.about__content__label=section.primary.label
-              .about__content__description!=PrismicDOM.RichText.asHtml(section.primary.description)
+              p.about__content__label(data-animation="label")=section.primary.label
+              .about__content__description!=PrismicDOM.RichText.asHtml(section.primary.description).replace(/<p>/g, '<p data-animation="paragraph">')
               figure.about__content__media
                 img.about__content__media__image(alt=section.primary.image.alt, data-src=section.primary.image.url)
 
@@ -28,8 +28,8 @@ block content
           section.about__highlight
             .about__highlight__wrapper
               if section.primary.label
-                p.about__highlight__label=section.primary.label
-              h3.about__highlight__title=section.primary.highlight_title
+                p.about__highlight__label(data-animation="label")=section.primary.label
+              h3.about__highlight__title(data-animation="highlight")=section.primary.highlight_title
 
               each media in section.items
                 figure.about__highlight__media
