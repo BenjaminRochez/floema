@@ -62,3 +62,10 @@ setTimeout(_ => {
 //App.js
 this.preloader.once('completed', this.onPreloaded)
 ```
+
+
+
+
+### Async Load images
+
+Use data-src instead of src and use AsyncLoad.js which use intersectionObserver to load on scroll

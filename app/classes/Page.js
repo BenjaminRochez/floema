@@ -11,6 +11,10 @@ import Label from 'animations/Label'
 import Paragraph from 'animations/Paragraph'
 import Title from 'animations/Title'
 
+import { ColorsManager } from 'classes/Colors'
+import AsyncLoad from 'classes/AsyncLoad'
+
+
 export default class Page {
   constructor ({
     element,
@@ -24,6 +28,8 @@ export default class Page {
       animationsLabels: '[data-animation="label"]',
       animationsParagraphs: '[data-animation="paragraph"]',
       animationsTitles: '[data-animation="title"]',
+
+      preloaders: '[data-src]'
     }
     this.id = id
 
@@ -62,6 +68,7 @@ export default class Page {
     })
 
     this.createAnimations()
+    this.createPreloader()
   }
 
   createAnimations () {
@@ -104,10 +111,21 @@ export default class Page {
     this.animations.push(...this.animationsLabels)
   }
 
+  createPreloader () {
+    this.preloaders = map(this.elements.preloaders, element => {
+      return new AsyncLoad({ element })
+    })
+  }
 
 
   show () {
     return new Promise(resolve => {
+
+      ColorsManager.change({
+        backgroundColor: this.element.getAttribute('data-background'),
+        color: this.element.getAttribute('data-color')
+      })
+
       this.animationIn = GSAP.timeline()
       GSAP.fromTo(this.element, {
         autoAlpha: 0
@@ -164,4 +182,11 @@ export default class Page {
   removeEventListeners () {
     window.removeEventListener('mousewheel', this.onMouseWheel)
   }
+
+   /**
+   * Destroy.
+   */
+    destroy () {
+      this.removeEventListeners()
+    }
 }

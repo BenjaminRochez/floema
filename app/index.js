@@ -3,16 +3,19 @@ import About from 'pages/about'
 import Collections from 'pages/collections'
 import Detail from 'pages/detail'
 import Home from 'pages/home'
+import Navigation from './components/Navigation'
 import Preloader from './components/Preloader'
 
 class App {
   constructor () {
-    this.createPreloader()
     this.createContent()
+    this.createPreloader()
     this.createPages()
+    this.createNavigation()
 
     this.addEventListeners()
     this.addLinkListerners()
+
   }
 
   createPreloader () {
@@ -34,6 +37,12 @@ class App {
     this.template = this.content.getAttribute('data-template')
   }
 
+  createNavigation() {
+    this.navigation = new Navigation({
+      template: this.template
+    })
+  }
+
   createPages () {
     this.pages = {
       about: new About(),
@@ -43,6 +52,7 @@ class App {
     }
     this.page = this.pages[this.template]
     this.page.create()
+
   }
 
   async onChange (url) {
@@ -58,6 +68,7 @@ class App {
       const divContent = div.querySelector('.content')
 
       this.template = divContent.getAttribute('data-template')
+      this.navigation.onChange(this.template)
       this.content.setAttribute('data-template', this.template)
       this.content.innerHTML = divContent.innerHTML
 
