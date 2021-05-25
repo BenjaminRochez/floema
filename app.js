@@ -10,6 +10,7 @@ const PrismicDOM = require('prismic-dom')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const logger = require('morgan')
+const UAParser = require('ua-parser-js');
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -17,6 +18,8 @@ app.use(errorHandler())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride())
 app.use(express.static(path.join(__dirname, 'public')))
+
+
 
 const initApi = req => {
   return Prismic.getApi(process.env.PRISMIC_ENDPOINT, {
@@ -32,6 +35,13 @@ const handleLinkResolver = (doc) => {
 }
 
 app.use((req, res, next) => {
+  const ua = UAParser(req.headers['user-agent']);
+
+  res.locals.isDesktop = ua.device.type === undefined;
+  res.locals.isPhone = ua.device.type === 'mobile';
+  res.locals.isTablet = ua.device.type === 'tablet';
+
+
   res.locals.Link = handleLinkResolver
   res.locals.PrismicDOM = PrismicDOM
   res.locals.Numbers = index => {
