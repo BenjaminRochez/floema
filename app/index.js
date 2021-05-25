@@ -32,6 +32,14 @@ class App {
     this.update()
   }
 
+  onPopState() {
+    this.onChange({
+      url: window.location.pathname,
+      push: false
+    });
+  }
+
+
   createContent () {
     this.content = document.querySelector('.content')
     this.template = this.content.getAttribute('data-template')
@@ -55,7 +63,7 @@ class App {
 
   }
 
-  async onChange (url) {
+  async onChange ({ url, push = true }) {
     await this.page.hide()
 
     const request = await window.fetch(url)
@@ -64,6 +72,10 @@ class App {
       const html = await request.text()
       const div = document.createElement('div')
       div.innerHTML = html
+
+      if (push) {
+        window.history.pushState({}, '', url);
+      }
 
       const divContent = div.querySelector('.content')
 
@@ -102,7 +114,7 @@ class App {
    * Listeners.
    */
   addEventListeners() {
-    //window.addEventListener('popstate', this.onPopState.bind(this));
+    window.addEventListener('popstate', this.onPopState.bind(this));
     window.addEventListener('resize', this.onResize.bind(this));
   }
 
@@ -114,7 +126,7 @@ class App {
 
         const { href } = link
 
-        this.onChange(href)
+        this.onChange({url: href})
       }
     })
   }
