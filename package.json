@@ -53,6 +53,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
     "normalize-wheel": "^1.0.1",
+    "ogl": "^0.0.73",
     "prefix": "^1.0.0",
     "prismic-dom": "^2.2.5",
     "pug": "^3.0.2",

@@ -6,13 +6,15 @@ import Home from 'pages/home'
 import Navigation from './components/Navigation'
 import Preloader from './components/Preloader'
 
+import Canvas from 'components/Canvas'
+
 class App {
   constructor () {
     this.createContent()
     this.createPreloader()
     this.createPages()
     this.createNavigation()
-
+    this.createCanvas()
     this.addEventListeners()
     this.addLinkListerners()
 
@@ -22,6 +24,7 @@ class App {
     this.preloader = new Preloader()
     this.preloader.once('completed', this.onPreloaded.bind(this))
   }
+
   /**
    * Events
    */
@@ -39,7 +42,6 @@ class App {
     });
   }
 
-
   createContent () {
     this.content = document.querySelector('.content')
     this.template = this.content.getAttribute('data-template')
@@ -49,6 +51,10 @@ class App {
     this.navigation = new Navigation({
       template: this.template
     })
+  }
+
+  createCanvas (){
+    this.canvas = new Canvas()
   }
 
   createPages () {
@@ -97,13 +103,21 @@ class App {
   }
 
   onResize() {
-    this.page.onResize();
+    if(this.canvas && this.canvas.onResize){
+      this.canvas.onResize()
+    }
+    if(this.page && this.page.onResize){
+      this.page.onResize();
+    }
   }
 
   /**
    * Loop.
    */
   update() {
+    if(this.canvas && this.canvas.update){
+      this.canvas.update()
+    }
     if(this.page && this.page.update){
       this.page.update()
     }
