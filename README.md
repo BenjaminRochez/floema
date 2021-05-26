@@ -69,3 +69,10 @@ this.preloader.once('completed', this.onPreloaded)
 ### Async Load images
 
 Use data-src instead of src and use AsyncLoad.js which use intersectionObserver to load on scroll
+
+
+### Infinite draggable gallery
+
+Basically, we position the webgl textyres images using the getBoundingClientRect() of each element and their sizes.
+Then, we use onTouchMove, onTouchDown & onTouchUp to calculate the position of the mouse while dragging (we had lerp to have a velocity effect)
+Finally, we detect when a mesh is out of the window by using his position & the window width. We then add/substract the gallery width from his position to re-position it correctly, giving the feel of an infinite scroll

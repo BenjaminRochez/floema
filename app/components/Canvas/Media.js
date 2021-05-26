@@ -15,6 +15,11 @@ export default class {
     this.createTexture();
     this.createProgram();
     this.createMesh();
+
+    this.extra = {
+      x: 0,
+      y: 0
+    }
   }
 
   createTexture() {
