@@ -37,7 +37,8 @@ a {
 canvas {
   pointer-events: none;
   position: relative;
-  z-index: z('canvas');
+  //z-index: z('canvas');
+  z-index: 2;
 }
 
 button {

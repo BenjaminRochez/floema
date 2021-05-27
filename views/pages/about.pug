@@ -7,9 +7,9 @@ block content
   .about(data-background="#B2B8C3" data-color="#37384C")
     .about__wrapper
       section.about__gallery
-        .about__gallery
+        .about__gallery__wrapper
           each media in about.data.gallery
-            figure.about_gallery__media
+            figure.about__gallery__media
               img.about__gallery__media__image(alt=media.image.alt data-src=media.image.url)
 
       each section in about.data.body
