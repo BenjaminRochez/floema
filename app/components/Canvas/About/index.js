@@ -12,6 +12,8 @@ export default class {
     this.createGeometry();
     this.createGalleries();
     this.group.setParent(scene);
+
+    this.show();
   }
 
   createGeometry() {
@@ -50,15 +52,21 @@ export default class {
   }
 
   update() {
-    if (!this.galleryBounds) return;
+    map(this.galleries, (gallery) => gallery.update(scroll));
+  }
 
-    map(this.galleries, gallery => gallery.update());
+  show(){
+    map(this.galleries, (gallery) => gallery.show());
+  }
+
+  hide(){
+    map(this.galleries, (gallery) => gallery.hide());
   }
 
   /**
    * Destroy
    */
-   destroy(){
-    //this.group.setParent(null)
+  destroy() {
+    map(this.galleries, (gallery) => gallery.destroy());
   }
 }

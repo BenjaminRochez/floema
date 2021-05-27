@@ -18,8 +18,8 @@ export default class {
 
     this.extra = {
       x: 0,
-      y: 0
-    }
+      y: 0,
+    };
   }
 
   createTexture() {
@@ -36,6 +36,7 @@ export default class {
       vertex,
       uniforms: {
         tMap: { value: this.texture },
+        uAlpha: {value: 0}
       },
     });
   }
@@ -48,53 +49,83 @@ export default class {
     this.mesh.setParent(this.scene);
     this.mesh.position.x += this.index * this.mesh.scale.x;
 
-    this.mesh.rotation.z = GSAP.utils.random(-Math.PI * 0.03, Math.PI * 0.03)
+    this.mesh.rotation.z = GSAP.utils.random(-Math.PI * 0.03, Math.PI * 0.03);
+  }
+
+  createBounds({ sizes }) {
+    this.sizes = sizes;
+
+    this.bounds = this.element.getBoundingClientRect();
+
+    this.updateScale();
+    this.updateX();
+    this.updateY();
+  }
+
+  /**
+   * Animation
+   */
+
+  show() {
+    GSAP.fromTo(
+      this.program.uniforms.uAlpha,
+      {
+        value: 0,
+      },
+      {
+        value: 1,
+      }
+    );
+  }
+
+  hide() {
+    GSAP.to(this.program.uniforms.uAlpha, {
+      value: 0,
+    });
   }
 
   onResize(sizes, scroll) {
     this.extra = {
       x: 0,
-      y: 0
-    }
-    this.createBounds(sizes)
-    this.updateX(scroll && scroll.x)
-    this.updateY(scroll && scroll.y)
+      y: 0,
+    };
+    this.createBounds(sizes);
+    this.updateX(scroll && scroll.x);
+    this.updateY(scroll && scroll.y);
   }
 
-  createBounds ({ sizes }) {
-    this.sizes = sizes
+  updateScale() {
+    this.height = this.bounds.height / window.innerHeight;
+    this.width = this.bounds.width / window.innerWidth;
 
-    this.bounds = this.element.getBoundingClientRect()
-
-    this.updateScale()
-    this.updateX()
-    this.updateY()
+    this.mesh.scale.x = this.sizes.width * this.width;
+    this.mesh.scale.y = this.sizes.height * this.height;
   }
 
-  updateScale () {
-    this.height = this.bounds.height / window.innerHeight
-    this.width = this.bounds.width / window.innerWidth
+  updateX(x = 0) {
+    this.x = (this.bounds.left + x) / window.innerWidth;
 
-    this.mesh.scale.x = this.sizes.width * this.width
-    this.mesh.scale.y = this.sizes.height * this.height
+    this.mesh.position.x =
+      -this.sizes.width / 2 +
+      this.mesh.scale.x / 2 +
+      this.x * this.sizes.width +
+      this.extra.x;
   }
 
-  updateX (x = 0) {
-    this.x = (this.bounds.left + x) / window.innerWidth
+  updateY(y = 0) {
+    this.y = (this.bounds.top + y) / window.innerHeight;
 
-    this.mesh.position.x = (-this.sizes.width / 2) + (this.mesh.scale.x / 2) + (this.x * this.sizes.width) + this.extra.x
+    this.mesh.position.y =
+      this.sizes.height / 2 -
+      this.mesh.scale.y / 2 -
+      this.y * this.sizes.height +
+      this.extra.y;
   }
 
-  updateY (y = 0) {
-    this.y = (this.bounds.top + y) / window.innerHeight
-
-    this.mesh.position.y = (this.sizes.height / 2) - (this.mesh.scale.y / 2) - (this.y * this.sizes.height) + this.extra.y
-  }
-
-  update (scroll) {
-    if(!this.bounds) return
-    this.updateX(scroll.x)
-    this.updateY(scroll.y)
+  update(scroll) {
+    if (!this.bounds) return;
+    this.updateX(scroll.x);
+    this.updateY(scroll.y);
 
     //this.program.uniforms.uSpeed.value = speed
   }

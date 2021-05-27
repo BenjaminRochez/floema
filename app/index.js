@@ -70,6 +70,7 @@ class App {
   }
 
   async onChange({ url, push = true }) {
+    this.canvas.onChangeStart(this.template);
     await this.page.hide();
 
     const request = await window.fetch(url);
@@ -86,13 +87,19 @@ class App {
       const divContent = div.querySelector(".content");
 
       this.template = divContent.getAttribute("data-template");
+
       this.navigation.onChange(this.template);
+
+      //this.canvas.onChange(this.template);
+
       this.content.setAttribute("data-template", this.template);
       this.content.innerHTML = divContent.innerHTML;
 
-      this.page = this.pages[this.template];
+      this.canvas.onChangeEnd(this.template);
 
+      this.page = this.pages[this.template];
       this.page.create();
+
       this.onResize();
       this.page.show();
 
@@ -103,12 +110,13 @@ class App {
   }
 
   onResize() {
-    if (this.canvas && this.canvas.onResize) {
-      this.canvas.onResize();
+    if (this.page && this.page.onResize) {
+      this.page.onResize();
     }
+
     window.requestAnimationFrame((_) => {
-      if (this.page && this.page.onResize) {
-        this.page.onResize();
+      if (this.canvas && this.canvas.onResize) {
+        this.canvas.onResize();
       }
     });
   }

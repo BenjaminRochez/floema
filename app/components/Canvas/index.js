@@ -21,7 +21,7 @@ export default class Canvas {
     this.createCamera();
 
     this.onResize();
-    this.onRouteUpdate(this.template);
+    this.onChangeEnd(this.template);
   }
 
   createRenderer() {
@@ -175,7 +175,18 @@ export default class Canvas {
     this.about = null;
   }
 
-  onRouteUpdate(template) {
+  onChangeStart(){
+    if(this.home){
+      this.home.hide()
+    }
+    if(this.about){
+      this.about.hide()
+    }
+  }
+
+
+
+  onChangeEnd(template) {
     if (template === "home") {
       this.createHome();
     } else if (this.home) {
@@ -211,7 +222,6 @@ export default class Canvas {
     }
 
     if (this.home) {
-      console.log("home");
       this.home.onResize(values);
     }
   }
@@ -221,7 +231,7 @@ export default class Canvas {
       this.home.update();
     }
     if (this.about) {
-      this.about.update();
+      this.about.update(scroll);
     }
     this.renderer.render({
       camera: this.camera,
