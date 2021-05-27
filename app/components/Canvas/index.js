@@ -146,10 +146,9 @@ export default class Canvas {
     // if (this.collections) {
     //   this.collections.onWheel(event)
     // }
-
-    // if (this.home) {
-    //   this.home.onWheel(event)
-    // }
+    if (this.home) {
+      this.home.onWheel(event)
+    }
   }
 
 

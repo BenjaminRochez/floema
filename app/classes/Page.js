@@ -1,5 +1,4 @@
 import GSAP from 'gsap'
-import NormalizeWheel from 'normalize-wheel';
 import Prefix from 'prefix';
 import each from 'lodash/each'
 import map from 'lodash/map'
@@ -35,7 +34,6 @@ export default class Page {
 
     this.transformPrefix = Prefix('transform')
 
-    this.onMouseWheel = this.onMouseWheel.bind(this)
   }
 
   create () {
@@ -170,17 +168,16 @@ export default class Page {
     each(this.animations, (animation) => animation.onResize());
   }
 
-  onMouseWheel (event) {
-    const { pixelY } = NormalizeWheel(event)
+  onWheel ({ pixelY }) {
     this.scroll.target += pixelY
   }
 
   addEventListeners () {
-    window.addEventListener('mousewheel', this.onMouseWheel)
+
   }
 
   removeEventListeners () {
-    window.removeEventListener('mousewheel', this.onMouseWheel)
+
   }
 
    /**

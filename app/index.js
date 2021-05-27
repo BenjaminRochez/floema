@@ -1,11 +1,11 @@
 import each from "lodash/each";
+import NormalizeWheel from 'normalize-wheel';
 import About from "pages/about";
 import Collections from "pages/collections";
 import Detail from "pages/detail";
 import Home from "pages/home";
 import Navigation from "./components/Navigation";
 import Preloader from "./components/Preloader";
-
 import Canvas from "components/Canvas";
 
 class App {
@@ -104,9 +104,11 @@ class App {
     if (this.canvas && this.canvas.onResize) {
       this.canvas.onResize();
     }
-    if (this.page && this.page.onResize) {
-      this.page.onResize();
-    }
+    window.requestAnimationFrame( _ => {
+      if (this.page && this.page.onResize) {
+        this.page.onResize();
+      }
+    })
   }
 
   onTouchDown(event) {
@@ -127,17 +129,17 @@ class App {
     }
   }
 
-  // onWheel(event) {
-  //   const normalizedWheel = NormalizeWheel(event);
+  onWheel(event) {
+    const normalizedWheel = NormalizeWheel(event);
 
-  //   if (this.canvas && this.canvas.onWheel) {
-  //     this.canvas.onWheel(normalizedWheel);
-  //   }
+    if (this.canvas && this.canvas.onWheel) {
+      this.canvas.onWheel(normalizedWheel);
+    }
 
-  //   if (this.page && this.page.onWheel) {
-  //     this.page.onWheel(normalizedWheel);
-  //   }
-  // }
+    if (this.page && this.page.onWheel) {
+      this.page.onWheel(normalizedWheel);
+    }
+  }
 
   /**
    * Loop.
@@ -157,7 +159,7 @@ class App {
    */
   addEventListeners() {
     window.addEventListener("popstate", this.onPopState.bind(this));
-    //window.addEventListener('mousewheel', this.onWheel.bind(this));
+    window.addEventListener('mousewheel', this.onWheel.bind(this));
 
     window.addEventListener("mousedown", this.onTouchDown.bind(this));
     window.addEventListener("mousemove", this.onTouchMove.bind(this));
