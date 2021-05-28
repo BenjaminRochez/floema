@@ -51,15 +51,16 @@ export default class {
     map(this.galleries, (gallery) => gallery.onResize(event));
   }
 
-  update() {
+  update(scroll) {
+    const y = scroll.current / window.innerHeight;
     map(this.galleries, (gallery) => gallery.update(scroll));
   }
 
-  show(){
+  show() {
     map(this.galleries, (gallery) => gallery.show());
   }
 
-  hide(){
+  hide() {
     map(this.galleries, (gallery) => gallery.hide());
   }
 

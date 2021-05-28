@@ -226,7 +226,7 @@ export default class Canvas {
     }
   }
 
-  update() {
+  update(scroll) {
     if (this.home) {
       this.home.update();
     }

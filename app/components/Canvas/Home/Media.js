@@ -36,7 +36,7 @@ export default class {
       vertex,
       uniforms: {
         tMap: { value: this.texture },
-        uAlpha: {value: 0}
+        uAlpha: { value: 0 },
       },
     });
   }
@@ -94,6 +94,8 @@ export default class {
     this.updateY(scroll && scroll.y);
   }
 
+
+
   updateScale() {
     this.height = this.bounds.height / window.innerHeight;
     this.width = this.bounds.width / window.innerWidth;
@@ -124,6 +126,8 @@ export default class {
 
   update(scroll) {
     if (!this.bounds) return;
+
+
     this.updateX(scroll.x);
     this.updateY(scroll.y);
 

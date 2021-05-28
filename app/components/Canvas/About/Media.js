@@ -17,8 +17,8 @@ export default class {
     this.createMesh();
 
     this.createBounds({
-      sizes: this.sizes
-    })
+      sizes: this.sizes,
+    });
 
     this.extra = {
       x: 0,
@@ -65,7 +65,7 @@ export default class {
     this.sizes = sizes;
 
     this.bounds = this.element.getBoundingClientRect();
-    this.updateScale()
+    this.updateScale();
     this.updateX(scroll);
     this.updateY(0);
   }
@@ -90,6 +90,16 @@ export default class {
     GSAP.to(this.program.uniforms.uAlpha, {
       value: 0,
     });
+  }
+
+  updateRotation() {
+    this.mesh.rotation.z = GSAP.utils.mapRange(
+      -this.sizes.width / 2,
+      this.sizes.width / 2,
+      Math.PI * 0.1,
+      -Math.PI * 0.1,
+      this.mesh.position.x
+    );
   }
 
   updateScale() {
@@ -117,10 +127,17 @@ export default class {
       this.sizes.height / 2 -
       this.mesh.scale.y / 2 -
       this.y * this.sizes.height;
+
+    this.mesh.position.y +=
+      Math.cos((this.mesh.position.x / this.sizes.width) * Math.PI * 0.1) *
+        40 -
+      40;
   }
 
   update(scroll) {
     if (!this.bounds) return;
+
+    this.updateRotation();
     this.updateX(scroll);
     this.updateY(0);
 
