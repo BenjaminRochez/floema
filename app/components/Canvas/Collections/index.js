@@ -72,8 +72,8 @@ export default class {
   onResize(event) {
     this.bounds = this.galleryElement.getBoundingClientRect();
     this.sizes = event.sizes;
-    this.width =
-      (this.bounds.width / window.innerWidth) * this.sizes.width;
+
+    this.scroll.limit = -this.bounds.width + this.medias[0].element.clientWidth
 
     this.scroll.last = this.scroll.target = 0;
     map(this.medias, (media) => media.onResize(event, this.scroll));
@@ -89,6 +89,9 @@ export default class {
 
   update() {
     if (!this.bounds) return;
+
+    this.scroll.target = GSAP.utils.clamp(this.scroll.limit, 0, this.scroll.target);
+
     this.scroll.current = GSAP.utils.interpolate(
       this.scroll.current,
       this.scroll.target,
@@ -104,7 +107,7 @@ export default class {
     this.scroll.last = this.scroll.current;
 
     map(this.medias, (media, index) => {
-      media.update(this.scroll);
+      media.update(this.scroll.current);
     });
   }
 

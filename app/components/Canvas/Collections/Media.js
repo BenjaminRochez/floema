@@ -27,8 +27,10 @@ export default class {
     const image = this.element.querySelector('.collections__gallery__media__image')
     this.image = new window.Image();
     this.image.crossOrigin = "anonymous";
-    this.image.src = this.element.getAttribute("data-src");
+    this.image.src = image.getAttribute("data-src");
     this.image.onload = (_) => (this.texture.image = this.image);
+
+    console.log(this.texture)
   }
 
   createProgram() {
@@ -126,9 +128,8 @@ export default class {
   update(scroll) {
     if (!this.bounds) return;
 
-
-    this.updateX(scroll.x);
-    this.updateY(scroll.y);
+    this.updateX(scroll);
+    //this.updateY(scroll.y);
 
     //this.program.uniforms.uSpeed.value = speed
   }
