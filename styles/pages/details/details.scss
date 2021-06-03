@@ -9,16 +9,16 @@
     height: auto;
   }
 }
-
 .detail__wrapper {
   align-items: center;
   display: flex;
 
+
   @include media('<phone') {
     display: block;
     margin: auto;
-    padding: 15rem 0 31.5rem;
     width: 66.1rem;
+    padding: 15rem 0 31.5rem;
   }
 }
 

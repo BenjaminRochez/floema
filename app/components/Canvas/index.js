@@ -190,6 +190,25 @@ export default class Canvas {
     this.collections = null;
   }
 
+   /**
+   * Detail.
+   */
+    // createDetail () {
+    //   this.detail = new Detail({
+    //     gl: this.gl,
+    //     scene: this.scene,
+    //     sizes: this.sizes,
+    //     transition: this.transition
+    //   })
+    // }
+
+    // destroyDetail () {
+    //   if (!this.detail) return
+
+    //   this.detail.destroy()
+    //   this.detail = null
+    // }
+
   onChangeStart(){
     if(this.home){
       this.home.hide()
@@ -199,6 +218,10 @@ export default class Canvas {
     }
     if(this.collections){
       this.collections.hide()
+    }
+
+    if(this.detail){
+      this.detail.hide()
     }
   }
 
@@ -221,6 +244,12 @@ export default class Canvas {
     } else {
       this.destroyCollections();
     }
+
+    // if (template === "detail") {
+    //   this.createDetail();
+    // } else {
+    //   this.destroyDetail();
+    // }
   }
 
   onResize() {
