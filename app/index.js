@@ -11,16 +11,18 @@ import Canvas from "components/Canvas";
 class App {
   constructor() {
     this.createContent();
+    this.createCanvas();
     this.createPreloader();
     this.createPages();
     this.createNavigation();
-    this.createCanvas();
     this.addEventListeners();
     this.addLinkListerners();
   }
 
   createPreloader() {
-    this.preloader = new Preloader();
+    this.preloader = new Preloader({
+      canvas: this.canvas
+    });
     this.preloader.once("completed", this.onPreloaded.bind(this));
   }
 
@@ -28,6 +30,7 @@ class App {
    * Events
    */
   onPreloaded() {
+    this.canvas.onPreloaded();
     this.preloader.destroy();
     this.onResize();
     this.page.show();
