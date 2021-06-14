@@ -33,7 +33,9 @@ export default class {
       vertex,
       uniforms: {
         tMap: { value: this.texture },
-        uAlpha: { value: 0 },
+        uAlpha: { value: 0.4 },
+        uViewportSizes: {value: [this.sizes.width, this.sizes.height]},
+        uSpeed: {value: 0.0}
       },
     });
   }
@@ -70,7 +72,7 @@ export default class {
         value: 0,
       },
       {
-        value: 1,
+        value: 0.4,
       }
     );
   }
@@ -121,13 +123,13 @@ export default class {
       this.extra.y;
   }
 
-  update(scroll) {
+  update(scroll, speed) {
     if (!this.bounds) return;
 
 
     this.updateX(scroll.x);
     this.updateY(scroll.y);
 
-    //this.program.uniforms.uSpeed.value = speed
+    this.program.uniforms.uSpeed.value = speed
   }
 }

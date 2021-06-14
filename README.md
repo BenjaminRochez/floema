@@ -76,3 +76,20 @@ Use data-src instead of src and use AsyncLoad.js which use intersectionObserver 
 Basically, we position the webgl textyres images using the getBoundingClientRect() of each element and their sizes.
 Then, we use onTouchMove, onTouchDown & onTouchUp to calculate the position of the mouse while dragging (we had lerp to have a velocity effect)
 Finally, we detect when a mesh is out of the window by using his position & the window width. We then add/substract the gallery width from his position to re-position it correctly, giving the feel of an infinite scroll
+
+
+### KACPER.ch homepage distortion
+See video implementing vertex distortion using GLSL code min 5
+vertex.glsl
+```
+vUv = uV;
+vec4 newPosition = modelViewMatrix * vec4(position, 1.0);
+newPosition.z += sin(newPosition.y / uViewportSizes.y * PI + PI / 2.0) * abs(uStrength);
+gl_Position = projectionMatrix * newPosition;
+```
+
+Transforms translate are gpu intensive, it's always better to move the camera than the element.
+
+
+Get the vector position for the dragging transform
+https://stackoverflow.com/questions/20916953/get-distance-between-two-points-in-canvas

@@ -85,6 +85,7 @@ class App {
     if (request.status === 200) {
       const html = await request.text();
       const div = document.createElement("div");
+      window.history.pushState({}, '', url);
       div.innerHTML = html;
 
       if (push) {
