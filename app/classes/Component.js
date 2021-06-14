@@ -37,7 +37,7 @@ export default class Component extends EventEmitter {
         } else if (this.elements[key].length === 1) {
           this.elements[key] = document.querySelector(entry);
         }
-        console.log(this.elements)
+
       }
     });
   }

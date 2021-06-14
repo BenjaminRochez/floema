@@ -17,6 +17,10 @@ class App {
     this.createNavigation();
     this.addEventListeners();
     this.addLinkListerners();
+
+    this.onResize();
+
+    this.update();
   }
 
   createPreloader() {
@@ -30,11 +34,11 @@ class App {
    * Events
    */
   onPreloaded() {
+    this.onResize();
     this.canvas.onPreloaded();
     this.preloader.destroy();
-    this.onResize();
+
     this.page.show();
-    this.update();
   }
 
   onPopState() {

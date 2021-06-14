@@ -88,7 +88,6 @@ const handleRequest = async (api) => {
       assets.push(item.products_product.data.image.url);
     })
   })
-  console.log(assets)
   return {
     assets,
     home,

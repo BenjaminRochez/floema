@@ -1,6 +1,6 @@
 import { Texture } from "ogl";
 import Component from "classes/Component";
-import each from "lodash/each";
+
 import GSAP from "gsap";
 import { split } from "utils/text";
 
@@ -75,7 +75,7 @@ export default class Preloader extends Component {
   onLoaded() {
     return new Promise((resolve) => {
       this.animateOut = GSAP.timeline({
-        delay: 2,
+        delay: 1,
       });
 
       this.animateOut.to(this.elements.titleSpans, {
@@ -99,10 +99,8 @@ export default class Preloader extends Component {
       this.animateOut.to(
         this.element,
         {
-          duration: 1.5,
-          ease: "expo.out",
-          scaleY: 0,
-          transformOrigin: "100% 100%",
+          autoAlpha: 0,
+          duration: 1,
         },
         "-=1"
       );
